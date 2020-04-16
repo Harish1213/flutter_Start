@@ -8,7 +8,7 @@ void main() => runApp(MyApp());
 //   Widget build(BuildContext context) {
 //     return MaterialApp(
 //       title: 'Startup Name Generator',
-//       theme: ThemeData(          // Add the 3 lines from here... 
+//       theme: ThemeData(          // Add the 3 lines from here...
 //         primaryColor: Colors.white,
 //       ),                         // ... to here.
 //       home: RandomWords(),
@@ -16,17 +16,14 @@ void main() => runApp(MyApp());
 //   }
 // }
 
-
 // #docregion MyApp
 class MyApp extends StatelessWidget {
   // #docregion build
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Startup Name Generator',
-      theme: ThemeData(
-        primaryColor: Colors.white  
-        ),
+      title: 'Name Generator',
+      theme: ThemeData(primaryColor: Colors.white),
       home: RandomWords(),
     );
   }
@@ -88,48 +85,55 @@ class RandomWordsState extends State<RandomWords> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Startup Name Generator'),
-         actions: <Widget>[      // Add 3 lines from here...
+        title: Text(
+          'Startup Name Generator',
+          style: TextStyle(
+            
+            color: Colors.red,
+            fontWeight: FontWeight.bold
+          ),
+        ),
+        actions: <Widget>[
+          // Add 3 lines from here...
           IconButton(icon: Icon(Icons.list), onPressed: _pushSaved),
-        ],                      // ... to here. 
+        ], // ... to here.
       ),
       body: _buildSuggestions(),
     );
   }
+
   // #enddocregion RWS-build
   // #docregion RWS-var
- void _pushSaved() {
-  Navigator.of(context).push(
-    MaterialPageRoute<void>(
-      builder: (BuildContext context) {
-        final Iterable<ListTile> tiles = _saved.map(
-          (WordPair pair) {
-            return ListTile(
-              title: Text(
-                pair.asPascalCase,
-                style: _biggerFont,
-              ),
-            );
-          },
-        );
-        final List<Widget> divided = ListTile
-          .divideTiles(
+  void _pushSaved() {
+    Navigator.of(context).push(
+      MaterialPageRoute<void>(
+        builder: (BuildContext context) {
+          final Iterable<ListTile> tiles = _saved.map(
+            (WordPair pair) {
+              return ListTile(
+                title: Text(
+                  pair.asPascalCase,
+                  style: _biggerFont,
+                ),
+              );
+            },
+          );
+          final List<Widget> divided = ListTile.divideTiles(
             context: context,
             tiles: tiles,
-          )
-              .toList();
+          ).toList();
 
-        return Scaffold(         // Add 6 lines from here...
-          appBar: AppBar(
-            title: Text('Saved Suggestions'),
-          ),
-          body: ListView(children: divided),
-        );                       // ... to here.
-      },
-    ),
-  );
-}
-
+          return Scaffold(
+            // Add 6 lines from here...
+            appBar: AppBar(
+              title: Text('Saved Suggestions'),
+            ),
+            body: ListView(children: divided),
+          ); // ... to here.
+        },
+      ),
+    );
+  }
 }
 // #enddocregion RWS-var
 
